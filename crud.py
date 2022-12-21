@@ -50,4 +50,8 @@ def search_student(db: Session, search_term: str):
 
 
 def sort_students(db: Session, sort_by: str, sort_dir: str):
-    return db.query(models.Student).order_by(models.Student.c.name.desc(sort_by)).all()
+    sort_column = getattr(models.Student, sort_by)
+    if sort_dir == "desc":
+        sort_column = sort_column.desc()
+    data = db.query(models.Student).order_by(sort_column).all()
+    return data
