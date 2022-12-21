@@ -1,6 +1,6 @@
 import json
 import os
-from typing import List
+from typing import Optional, List
 from fastapi_pagination import Page, paginate, add_pagination
 
 
@@ -84,7 +84,7 @@ def search_student(search_term: str, db: Session = Depends(get_db)):
     return db_search
 
 
-@app.get("/students/sort", response_model=schemas.StudentDetail)
+@app.get("/students/sort/", response_model=List[schemas.StudentDetail])
 def sort_student(sort_by: str, sort_dir: str, db: Session = Depends(get_db)):
     db_sort = crud.sort_students(db,  sort_by=sort_by, sort_dir=sort_dir)
     return db_sort    
